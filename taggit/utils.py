@@ -18,6 +18,11 @@ def parse_tags(tagstring):
 
     tagstring = force_unicode(tagstring)
 
+    # support comma and double-quotes in zh_cn
+    table = {ord(u'，'): ord(u','), ord(u'“'): ord(u'"'), ord(u'”'): ord(u'"')}
+    if u'，' in tagstring or u'“' in tagstring or u'”' in tagstring:
+        tagstring = tagstring.translate(table)
+
     # Special case - if there are no commas or double quotes in the
     # input, we don't *do* a recall... I mean, we know we only need to
     # split on spaces.
